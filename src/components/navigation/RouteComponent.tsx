@@ -4,12 +4,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
 interface RouteComponentProps {
-  routeName: string;
-  routeRef: string;
-}
-
-interface RoutesProp {
-  pages: Route[];
+  routes: Route[];
 }
 
 export interface Route {
@@ -17,11 +12,7 @@ export interface Route {
   href: string;
 }
 
-export const RouteComponent = ({ routeName, routeRef }: RouteComponentProps) => {
-  return;
-};
-
-export const Routes = ({ routes }: RoutesProp) => {
+export const RouteComponent = ({ routes }: RouteComponentProps) => {
   const navigate = useNavigate();
   const redirectRoute = (route: string) => {
     navigate(route);

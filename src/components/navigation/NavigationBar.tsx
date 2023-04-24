@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Routes, Route } from "./RouteComponent.tsx";
+import { RouteComponent, Route } from "./RouteComponent.tsx";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -61,7 +61,7 @@ function NavigationBar() {
             FLASHGEN
           </Typography>
 
-          <Routes routes={routes} />
+          <RouteComponent routes={routes} />
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
