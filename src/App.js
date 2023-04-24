@@ -1,23 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HomePage } from "./components/home/HomePage";
+import { DeckHome } from "./components/decks/DeckHome.tsx";
+import { HomePage } from "./components/home/HomePage.tsx";
+import { LearnHome } from "./components/learn/LearnHome.tsx";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* <Route path="/test" exact component={TestPage} /> */}
+        <Route path="/decks" element={<DeckHome />} />
+        <Route path="/learn" element={<LearnHome />} />
       </Routes>
     </Router>
   );
 }
-
-const TestPage = () => {
-  return (
-    <>
-      <h1>This is the test page</h1>
-    </>
-  );
-};
 
 export default App;
