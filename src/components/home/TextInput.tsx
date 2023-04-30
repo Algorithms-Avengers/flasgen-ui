@@ -1,14 +1,14 @@
 import React from "react";
 
 type TextInputProps = {
-  onChange: Function;
+  onChangePage: Function;
 };
 
-export const TextInput = ({ onChange }: TextInputProps) => {
+export const TextInput = ({ onChangePage }: TextInputProps) => {
   return (
     <>
       <h1>Text input</h1>
-      <button onClick={() => onChange()}>Change Route</button>
+      <button onClick={() => onChangePage()}>Change Route</button>
     </>
   );
 };

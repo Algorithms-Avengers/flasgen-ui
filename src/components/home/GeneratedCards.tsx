@@ -1,14 +1,14 @@
 import React from "react";
 
 type GeneratedCardsProps = {
-  onChange: Function;
+  onChangePage: Function;
 };
 
-export const GeneratedCards = ({ onChange }: GeneratedCardsProps) => {
+export const GeneratedCards = ({ onChangePage }: GeneratedCardsProps) => {
   return (
     <>
       <h1>Generated Card</h1>
-      <button onClick={() => onChange()}>Change Route</button>
+      <button onClick={() => onChangePage()}>Change Route</button>
     </>
   );
 };

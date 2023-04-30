@@ -12,10 +12,10 @@ export const HomePage = () => {
 
   switch (currentRenderType) {
     case HomeRenderType.TEXT_INPUT:
-      return <TextInput onChange={() => setCurrentRenderType(HomeRenderType.GENERATED_CARDS)} />;
+      return <TextInput onChangePage={() => setCurrentRenderType(HomeRenderType.GENERATED_CARDS)} />;
     case HomeRenderType.GENERATED_CARDS:
-      return <GeneratedCards onChange={() => setCurrentRenderType(HomeRenderType.TEXT_INPUT)} />;
+      return <GeneratedCards onChangePage={() => setCurrentRenderType(HomeRenderType.TEXT_INPUT)} />;
     default:
-      return <TextInput onChange={() => setCurrentRenderType(HomeRenderType.GENERATED_CARDS)} />;
+      return <TextInput onChangePage={() => setCurrentRenderType(HomeRenderType.GENERATED_CARDS)} />;
   }
 };
