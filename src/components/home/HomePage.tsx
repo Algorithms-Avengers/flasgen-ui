@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { GeneratedCards } from "./GeneratedCards.tsx";
+import { TextInput } from "./TextInput.tsx";
 
 enum HomeRenderType {
   TEXT_INPUT,
@@ -10,32 +12,10 @@ export const HomePage = () => {
 
   switch (currentRenderType) {
     case HomeRenderType.TEXT_INPUT:
-      return <TextInput onChange={setCurrentRenderType} />;
+      return <TextInput onChange={() => setCurrentRenderType(HomeRenderType.GENERATED_CARDS)} />;
     case HomeRenderType.GENERATED_CARDS:
-      return <GeneratedCards onChange={setCurrentRenderType} />;
+      return <GeneratedCards onChange={() => setCurrentRenderType(HomeRenderType.TEXT_INPUT)} />;
     default:
-      return <TextInput onChange={setCurrentRenderType} />;
+      return <TextInput onChange={() => setCurrentRenderType(HomeRenderType.GENERATED_CARDS)} />;
   }
-};
-
-type TextInputProps = {
-  onChange: (type: HomeRenderType) => void;
-};
-
-const TextInput = ({ onChange }: TextInputProps) => {
-  return (
-    <>
-      <h1>Text input</h1>
-      <button onClick={() => onChange(HomeRenderType.GENERATED_CARDS)}>Change Route</button>
-    </>
-  );
-};
-
-const GeneratedCards = ({ onChange }: TextInputProps) => {
-  return (
-    <>
-      <h1>Generated Card</h1>
-      <button onClick={() => onChange(HomeRenderType.TEXT_INPUT)}>Change Route</button>
-    </>
-  );
 };
