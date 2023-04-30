@@ -10,18 +10,32 @@ export const HomePage = () => {
 
   switch (currentRenderType) {
     case HomeRenderType.TEXT_INPUT:
-      return <TextInput />;
+      return <TextInput onChange={setCurrentRenderType} />;
     case HomeRenderType.GENERATED_CARDS:
-      return <GeneratedCards />;
+      return <GeneratedCards onChange={setCurrentRenderType} />;
     default:
-      return <TextInput />;
+      return <TextInput onChange={setCurrentRenderType} />;
   }
 };
 
-const TextInput = () => {
-  return <h1>Text input</h1>;
+type TextInputProps = {
+  onChange: (type: HomeRenderType) => void;
 };
 
-const GeneratedCards = () => {
-  return <h1>Generated Cards</h1>;
+const TextInput = ({ onChange }: TextInputProps) => {
+  return (
+    <>
+      <h1>Text input</h1>
+      <button onClick={() => onChange(HomeRenderType.GENERATED_CARDS)}>Change Route</button>
+    </>
+  );
+};
+
+const GeneratedCards = ({ onChange }: TextInputProps) => {
+  return (
+    <>
+      <h1>Generated Card</h1>
+      <button onClick={() => onChange(HomeRenderType.TEXT_INPUT)}>Change Route</button>
+    </>
+  );
 };
