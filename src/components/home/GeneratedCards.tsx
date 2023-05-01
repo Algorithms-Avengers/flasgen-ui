@@ -9,14 +9,31 @@ type GeneratedCardsProps = {
 };
 
 export const GeneratedCards = ({ onChangePage, flashcards }: GeneratedCardsProps) => {
+  const [generatedFlashCards, setGeneratedFlashCards] = useState<FlashCardData[]>(flashcards);
+
+  const modifyFlashCard = (index, modifiedFlashcard) => {
+    console.log("Modify");
+    setGeneratedFlashCards((prevState: FlashCardData[]) => {
+      console.log("Modified");
+      return prevState.map((flashcard, idx) => {
+        if (idx === index) {
+          return modifiedFlashcard;
+        }
+        return flashcard;
+      });
+    });
+  };
+
+  console.log("Generated flash card: ", generatedFlashCards);
+
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Generated Cards</h1>
       <ScrollableBox maxHeight="400px">
         <ol>
-          {flashcards.map((flashcard: FlashCardData, index) => (
+          {generatedFlashCards.map((flashcard: FlashCardData, index) => (
             <li key={index}>
-              <RowFlashCard flashcard={flashcard} key={index} onChangePage={onChangePage} />
+              <RowFlashCard flashcard={flashcard} key={index} modifyFlashCard={modifyFlashCard} index={index} />
             </li>
           ))}
         </ol>

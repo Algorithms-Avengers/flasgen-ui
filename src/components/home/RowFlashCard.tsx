@@ -1,22 +1,24 @@
-import { Button } from "@mui/material";
+import { Button, TextareaAutosize } from "@mui/material";
 import React, { useState } from "react";
 import { FlashCardData } from "../data/FlashCardData";
 
 interface RowFlashCardProps {
   flashcard: FlashCardData;
+  index: any;
+  modifyFlashCard: any;
 }
 
-export const RowFlashCard = ({ flashcard }: RowFlashCardProps) => {
+export const RowFlashCard = ({ flashcard, index, modifyFlashCard }: RowFlashCardProps) => {
   const MAX_LENGTH = 50;
   const optionalDots = flashcard.question.length >= MAX_LENGTH ? "...?" : "";
   const [modalOpen, setModalOpen] = useState(false);
 
   function handleButtonClick() {
-    setModalOpen(true); // Open the modal
+    setModalOpen(true);
   }
 
   function handleCloseModal() {
-    setModalOpen(false); // Close the modal
+    setModalOpen(false);
   }
 
   return (
@@ -33,46 +35,91 @@ export const RowFlashCard = ({ flashcard }: RowFlashCardProps) => {
         </Button>
       </div>
 
-      {modalOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: "0",
-            left: "0",
-            right: "0",
-            bottom: "0",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            zIndex: "1000",
-          }}
-        >
-          <FlashCardModal flashcard={flashcard} onClose={handleCloseModal} />
-        </div>
-      )}
+      {modalOpen && <FlashCardModal index={index} flashcard={flashcard} onClose={handleCloseModal} modifyFlashCard={modifyFlashCard} />}
     </div>
   );
 };
 
-const FlashCardModal = (props) => {
-  const { flashcard, onClose } = props;
+interface ActionButtonState {
+  label: string;
+  color: any;
+}
 
-  // Render the modal contents here
+interface FlashCardModalProps {
+  index: any;
+  flashcard: FlashCardData;
+  onClose: any;
+  modifyFlashCard: Function;
+}
+
+const FlashCardModal = ({ index, flashcard, onClose, modifyFlashCard }: FlashCardModalProps) => {
+  const [disableEditBox, setDisableEditBox] = useState<boolean>(true);
+  const [actionButtonState, setActionButtonState] = useState<ActionButtonState>({ label: "EDIT", color: "primary" });
+  const [currentFlashcard, setCurrentFlashcard] = useState<FlashCardData>(flashcard);
+
+  const onClickActionButton = () => {
+    if (actionButtonState.label === "EDIT") {
+      setDisableEditBox(false);
+      setActionButtonState((prevState) => ({ ...prevState, label: "SAVE CHANGES", color: "success" }));
+    } else {
+      modifyFlashCard(index, currentFlashcard);
+      onClose();
+    }
+  };
+
+  return (
+    <FlashCardModalWrapper>
+      <h2>Edit Card</h2>
+      <h3>Question</h3>
+      <TextareaAutosize
+        value={currentFlashcard.question}
+        style={{ fontSize: "1.3em", width: "500px" }}
+        disabled={disableEditBox}
+        onChange={(e) => setCurrentFlashcard((prevState) => ({ ...prevState, question: e.target.value }))}
+      />
+      <h3>Answer</h3>
+      <TextareaAutosize value={flashcard.answer} style={{ fontSize: "1.3em", width: "500px" }} disabled={disableEditBox} />
+      <br />
+      <br />
+      <Button variant="contained" color={actionButtonState.color} onClick={onClickActionButton}>
+        {actionButtonState.label}
+      </Button>
+      <span style={{ margin: "0 10px" }}></span>
+      <Button variant="contained" onClick={onClose}>
+        CLOSE
+      </Button>
+    </FlashCardModalWrapper>
+  );
+};
+
+const FlashCardModalWrapper = (props) => {
   return (
     <div
       style={{
         position: "fixed",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        backgroundColor: "white",
-        padding: "20px",
-        borderRadius: "5px",
-        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+        top: "0",
+        left: "0",
+        right: "0",
+        bottom: "0",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
         zIndex: "1000",
       }}
     >
-      <h2>{flashcard.question}</h2>
-      <p>{flashcard.answer}</p>
-      <button onClick={onClose}>Close</button>
+      <div
+        style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          backgroundColor: "white",
+          padding: "20px",
+          borderRadius: "5px",
+          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+          zIndex: "1000",
+        }}
+      >
+        {props.children}
+      </div>
     </div>
   );
 };
