@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 import axios from "axios";
 import { FlashCardData } from "../data/FlashCardData";
+import { HomeRenderType } from "./HomePage.tsx";
 
 type TextInputProps = {
   onChangePage: Function;
@@ -25,7 +26,7 @@ export const TextInput = ({ onChangePage, onChangeFlashcards }: TextInputProps) 
     });
 
     onChangeFlashcards(flashCards);
-    onChangePage();
+    onChangePage(HomeRenderType.GENERATED_CARDS);
   };
 
   return (

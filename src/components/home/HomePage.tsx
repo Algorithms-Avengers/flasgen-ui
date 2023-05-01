@@ -4,7 +4,7 @@ import { EditCard } from "./EditCard.tsx";
 import { GeneratedCards } from "./GeneratedCards.tsx";
 import { TextInput } from "./TextInput.tsx";
 
-enum HomeRenderType {
+export enum HomeRenderType {
   TEXT_INPUT,
   GENERATED_CARDS,
   EDIT_CARD,
@@ -16,12 +16,12 @@ export const HomePage = () => {
 
   switch (currentRenderType) {
     case HomeRenderType.TEXT_INPUT:
-      return <TextInput onChangePage={() => setCurrentRenderType(HomeRenderType.GENERATED_CARDS)} onChangeFlashcards={setFlashcards} />;
+      return <TextInput onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)} onChangeFlashcards={setFlashcards} />;
     case HomeRenderType.GENERATED_CARDS:
-      return <GeneratedCards onChangePage={() => setCurrentRenderType(HomeRenderType.TEXT_INPUT)} flashcards={flashcards} />;
+      return <GeneratedCards onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)} flashcards={flashcards} />;
     case HomeRenderType.EDIT_CARD:
-      return <EditCard />;
+      return <EditCard onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)} />;
     default:
-      return <TextInput onChangePage={() => setCurrentRenderType(HomeRenderType.GENERATED_CARDS)} onChangeFlashcards={setFlashcards} />;
+      return <TextInput onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)} onChangeFlashcards={setFlashcards} />;
   }
 };
