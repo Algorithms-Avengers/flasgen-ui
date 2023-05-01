@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { FlashCardData } from "../data/FlashCardData";
+import { EditCard } from "./EditCard.tsx";
 import { GeneratedCards } from "./GeneratedCards.tsx";
 import { TextInput } from "./TextInput.tsx";
 
 enum HomeRenderType {
   TEXT_INPUT,
   GENERATED_CARDS,
+  EDIT_CARD,
 }
 
 export const HomePage = () => {
@@ -17,6 +19,8 @@ export const HomePage = () => {
       return <TextInput onChangePage={() => setCurrentRenderType(HomeRenderType.GENERATED_CARDS)} onChangeFlashcards={setFlashcards} />;
     case HomeRenderType.GENERATED_CARDS:
       return <GeneratedCards onChangePage={() => setCurrentRenderType(HomeRenderType.TEXT_INPUT)} flashcards={flashcards} />;
+    case HomeRenderType.EDIT_CARD:
+      return <EditCard />;
     default:
       return <TextInput onChangePage={() => setCurrentRenderType(HomeRenderType.GENERATED_CARDS)} onChangeFlashcards={setFlashcards} />;
   }
