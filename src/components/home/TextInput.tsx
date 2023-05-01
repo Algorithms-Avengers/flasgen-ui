@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import axios from "axios";
+import { FlashCardData } from "../data/FlashCardData";
 
 type TextInputProps = {
   onChangePage: Function;
+  onChangeFlashcards: Function;
 };
 
 const FLASHCARD_GENERATOR_API = "https://1fyijkhfxa.execute-api.us-west-2.amazonaws.com/default/flashcard_ml_management";
 
-export const TextInput = ({ onChangePage }: TextInputProps) => {
+export const TextInput = ({ onChangePage, onChangeFlashcards }: TextInputProps) => {
   const [inputText, setInputText] = useState<string>("hello");
 
   const onClickButton = async () => {
@@ -16,6 +18,14 @@ export const TextInput = ({ onChangePage }: TextInputProps) => {
     const { data } = await axios.post(FLASHCARD_GENERATOR_API, {
       text: inputText,
     });
+
+    const flashCards: FlashCardData[] = [];
+    data.body.forEach((flashCard: FlashCardData) => {
+      flashCards.push(flashCard);
+    });
+
+    onChangeFlashcards(flashCards);
+    onChangePage();
   };
 
   return (
