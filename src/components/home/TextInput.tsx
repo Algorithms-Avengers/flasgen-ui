@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
 import { generateFlashCards } from "../data/FlashCardData.tsx";
 import { HomeRenderType } from "./HomePage.tsx";
 import { LoadingButton } from "@mui/lab";

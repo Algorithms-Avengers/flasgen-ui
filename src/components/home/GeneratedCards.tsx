@@ -12,23 +12,33 @@ type GeneratedCardsProps = {
   onChangeFlashcards: Function;
 };
 
+enum RegenerateLevel {
+  EASIER = "EASIER",
+  HARDER = "HARDER",
+  CUSTOM = "CUSTOM",
+  DEFAULT = "DEFAULT",
+}
+
 interface RegenerateButtonState {
   color: any;
   isLoading: boolean;
+  level: RegenerateLevel;
 }
 
 export const GeneratedCards = ({ onChangePage, flashcards, searchText, onChangeFlashcards }: GeneratedCardsProps) => {
   const [generatedFlashCards, setGeneratedFlashCards] = useState<FlashCardData[]>(flashcards);
-  const [regenerateButtonState, setRegenerateButtonState] = useState<RegenerateButtonState>({ color: "secondary", isLoading: false });
+  const [regenerateButtonState, setRegenerateButtonState] = useState<RegenerateButtonState>({
+    color: "secondary",
+    isLoading: false,
+    level: RegenerateLevel.DEFAULT,
+  });
 
   useEffect(() => {
     setGeneratedFlashCards(flashcards);
   }, [flashcards]);
 
   const modifyFlashCard = (index, modifiedFlashcard) => {
-    console.log("Modify");
     setGeneratedFlashCards((prevState: FlashCardData[]) => {
-      console.log("Modified");
       return prevState.map((flashcard, idx) => {
         if (idx === index) {
           return modifiedFlashcard;
@@ -42,7 +52,7 @@ export const GeneratedCards = ({ onChangePage, flashcards, searchText, onChangeF
     // Wait for flash cards to be generated
     setRegenerateButtonState((prevState) => ({ ...prevState, isLoading: true }));
     const flashCards = await generateFlashCards(searchText);
-    console.log("Regenerated flash cards: ", flashCards);
+
     // Set loading to false
     setRegenerateButtonState((prevState) => ({ ...prevState, isLoading: false }));
 

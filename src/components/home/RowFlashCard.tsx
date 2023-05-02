@@ -1,6 +1,7 @@
 import { Button, TextareaAutosize } from "@mui/material";
 import React, { useState } from "react";
 import { FlashCardData } from "../data/FlashCardData";
+import { ModalWrapper } from "../helpers/PromptWrapper.tsx";
 
 interface RowFlashCardProps {
   flashcard: FlashCardData;
@@ -68,7 +69,7 @@ const FlashCardModal = ({ index, flashcard, onClose, modifyFlashCard }: FlashCar
   };
 
   return (
-    <FlashCardModalWrapper>
+    <ModalWrapper>
       <h2>Edit Card</h2>
       <h3>Question</h3>
       <TextareaAutosize
@@ -88,38 +89,6 @@ const FlashCardModal = ({ index, flashcard, onClose, modifyFlashCard }: FlashCar
       <Button variant="contained" onClick={onClose}>
         CLOSE
       </Button>
-    </FlashCardModalWrapper>
-  );
-};
-
-const FlashCardModalWrapper = (props) => {
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: "0",
-        left: "0",
-        right: "0",
-        bottom: "0",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        zIndex: "1000",
-      }}
-    >
-      <div
-        style={{
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          backgroundColor: "white",
-          padding: "20px",
-          borderRadius: "5px",
-          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
-          zIndex: "1000",
-        }}
-      >
-        {props.children}
-      </div>
-    </div>
+    </ModalWrapper>
   );
 };
