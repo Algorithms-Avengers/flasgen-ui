@@ -11,13 +11,35 @@ export enum HomeRenderType {
 export const HomePage = () => {
   const [currentRenderType, setCurrentRenderType] = useState<HomeRenderType>(HomeRenderType.TEXT_INPUT);
   const [flashcards, setFlashcards] = useState<FlashCardData>();
+  const [searchText, setSearchText] = useState<string>("");
 
   switch (currentRenderType) {
     case HomeRenderType.TEXT_INPUT:
-      return <TextInput onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)} onChangeFlashcards={setFlashcards} />;
+      return (
+        <TextInput
+          onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)}
+          onChangeFlashcards={setFlashcards}
+          searchText={searchText}
+          onChangeSearchText={setSearchText}
+        />
+      );
     case HomeRenderType.GENERATED_CARDS:
-      return <GeneratedCards onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)} flashcards={flashcards} />;
+      return (
+        <GeneratedCards
+          onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)}
+          flashcards={flashcards}
+          searchText={searchText}
+          onChangeFlashcards={setFlashcards}
+        />
+      );
     default:
-      return <TextInput onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)} onChangeFlashcards={setFlashcards} />;
+      return (
+        <TextInput
+          onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)}
+          onChangeFlashcards={setFlashcards}
+          searchText={searchText}
+          onChangeSearchText={setSearchText}
+        />
+      );
   }
 };

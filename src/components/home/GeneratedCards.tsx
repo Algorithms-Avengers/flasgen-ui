@@ -1,15 +1,29 @@
-import React, { useState } from "react";
-import { FlashCardData } from "../data/FlashCardData";
+import React, { useEffect, useState } from "react";
+import { FlashCardData, generateFlashCards } from "../data/FlashCardData.tsx";
 import { Button } from "@mui/material";
 import { RowFlashCard } from "./RowFlashCard.tsx";
+import { LoadingButton } from "@mui/lab";
+import { HomeRenderType } from "./HomePage.tsx";
 
 type GeneratedCardsProps = {
   onChangePage: Function;
   flashcards: FlashCardData[];
+  searchText: string;
+  onChangeFlashcards: Function;
 };
 
-export const GeneratedCards = ({ onChangePage, flashcards }: GeneratedCardsProps) => {
+interface RegenerateButtonState {
+  color: any;
+  isLoading: boolean;
+}
+
+export const GeneratedCards = ({ onChangePage, flashcards, searchText, onChangeFlashcards }: GeneratedCardsProps) => {
   const [generatedFlashCards, setGeneratedFlashCards] = useState<FlashCardData[]>(flashcards);
+  const [regenerateButtonState, setRegenerateButtonState] = useState<RegenerateButtonState>({ color: "secondary", isLoading: false });
+
+  useEffect(() => {
+    setGeneratedFlashCards(flashcards);
+  }, [flashcards]);
 
   const modifyFlashCard = (index, modifiedFlashcard) => {
     console.log("Modify");
@@ -24,7 +38,18 @@ export const GeneratedCards = ({ onChangePage, flashcards }: GeneratedCardsProps
     });
   };
 
-  console.log("Generated flash card: ", generatedFlashCards);
+  const onClickRegenerateButton = async () => {
+    // Wait for flash cards to be generated
+    setRegenerateButtonState((prevState) => ({ ...prevState, isLoading: true }));
+    const flashCards = await generateFlashCards(searchText);
+    console.log("Regenerated flash cards: ", flashCards);
+    // Set loading to false
+    setRegenerateButtonState((prevState) => ({ ...prevState, isLoading: false }));
+
+    // Update flashcard
+    onChangeFlashcards(flashCards);
+    onChangePage(HomeRenderType.GENERATED_CARDS);
+  };
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -44,9 +69,14 @@ export const GeneratedCards = ({ onChangePage, flashcards }: GeneratedCardsProps
       </Button>
       <br />
       <br />
-      <Button variant="contained" color="secondary" onClick={() => onChangePage()}>
+      <LoadingButton
+        variant="contained"
+        loading={regenerateButtonState.isLoading}
+        color={regenerateButtonState.color}
+        onClick={() => onClickRegenerateButton()}
+      >
         REGENERATE
-      </Button>
+      </LoadingButton>
     </div>
   );
 };
