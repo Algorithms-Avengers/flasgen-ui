@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { RowFlashCard } from "./RowFlashCard.tsx";
 import { LoadingButton } from "@mui/lab";
 import { HomeRenderType } from "./HomePage.tsx";
+import { ModalWrapper } from "../helpers/PromptWrapper.tsx";
 
 type GeneratedCardsProps = {
   onChangePage: Function;
@@ -27,6 +28,7 @@ interface RegenerateButtonState {
 
 export const GeneratedCards = ({ onChangePage, flashcards, searchText, onChangeFlashcards }: GeneratedCardsProps) => {
   const [generatedFlashCards, setGeneratedFlashCards] = useState<FlashCardData[]>(flashcards);
+  const [modalOpen, setModalOpen] = useState(false);
   const [regenerateButtonState, setRegenerateButtonState] = useState<RegenerateButtonState>({
     color: "secondary",
     isLoading: false,
@@ -49,9 +51,13 @@ export const GeneratedCards = ({ onChangePage, flashcards, searchText, onChangeF
   };
 
   const onClickRegenerateButton = async () => {
+    setModalOpen(true);
+  };
+
+  const onClickRegenerateWithLevel = async (level: RegenerateLevel) => {
     // Wait for flash cards to be generated
     setRegenerateButtonState((prevState) => ({ ...prevState, isLoading: true }));
-    const flashCards = await generateFlashCards(searchText);
+    const flashCards = await generateFlashCards(searchText, { level });
 
     // Set loading to false
     setRegenerateButtonState((prevState) => ({ ...prevState, isLoading: false }));
@@ -87,6 +93,8 @@ export const GeneratedCards = ({ onChangePage, flashcards, searchText, onChangeF
       >
         REGENERATE
       </LoadingButton>
+
+      {modalOpen && <RegenerateModal onChangeLevel={onClickRegenerateWithLevel} onClose={() => setModalOpen(false)} />}
     </div>
   );
 };
@@ -103,5 +111,38 @@ const ScrollableBox = ({ children, maxHeight }: ScrollableBoxProps) => {
         {children}
       </div>
     </div>
+  );
+};
+
+interface RegenerateModalProps {
+  onChangeLevel: Function;
+  onClose: Function;
+}
+
+const RegenerateModal = ({ onChangeLevel, onClose }: RegenerateModalProps) => {
+  const onClickLevelButton = async (level: RegenerateLevel) => {
+    onClose();
+    await onChangeLevel(level);
+  };
+
+  const colors: any[] = ["success", "error", "secondary", "info"];
+
+  return (
+    <ModalWrapper>
+      <h3>How do you want to regenerate?</h3>
+      {Object.values(RegenerateLevel).map((level: RegenerateLevel, index: number) => {
+        return (
+          <>
+            <Button onClick={() => onClickLevelButton(level)} color={colors[index]} variant="outlined">
+              {level}
+            </Button>
+            <span style={{ margin: "0 10px" }}></span>
+          </>
+        );
+      })}
+      <Button onClick={() => onClose()} variant="outlined" color="warning">
+        Cancel
+      </Button>
+    </ModalWrapper>
   );
 };

@@ -11,7 +11,7 @@ interface RowFlashCardProps {
 
 export const RowFlashCard = ({ flashcard, index, modifyFlashCard }: RowFlashCardProps) => {
   const MAX_LENGTH = 50;
-  const optionalDots = flashcard.question.length >= MAX_LENGTH ? "...?" : "";
+  const optionalDots = flashcard.question.length >= MAX_LENGTH ? "...?" : "?";
   const [modalOpen, setModalOpen] = useState(false);
 
   function handleButtonClick() {
