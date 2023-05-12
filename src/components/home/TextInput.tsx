@@ -1,30 +1,32 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
-import axios from "axios";
-import { FlashCardData } from "../data/FlashCardData";
+import { generateFlashCards } from "../data/FlashCardData.tsx";
 import { HomeRenderType } from "./HomePage.tsx";
+import { LoadingButton } from "@mui/lab";
 
 type TextInputProps = {
   onChangePage: Function;
   onChangeFlashcards: Function;
+  searchText: string;
+  onChangeSearchText: Function;
 };
 
-const FLASHCARD_GENERATOR_API = "https://1fyijkhfxa.execute-api.us-west-2.amazonaws.com/default/flashcard_ml_management";
+interface RegenerateButtonState {
+  color: any;
+  isLoading: boolean;
+}
 
-export const TextInput = ({ onChangePage, onChangeFlashcards }: TextInputProps) => {
-  const [inputText, setInputText] = useState<string>("hello");
+export const TextInput = ({ onChangePage, onChangeFlashcards, searchText, onChangeSearchText }: TextInputProps) => {
+  const [regenerateButtonState, setRegenerateButtonState] = useState<RegenerateButtonState>({ color: "primary", isLoading: false });
 
   const onClickButton = async () => {
-    console.log("Clicked");
-    const { data } = await axios.post(FLASHCARD_GENERATOR_API, {
-      text: inputText,
-    });
+    // Wait for flash cards to be generated
+    setRegenerateButtonState((prevState) => ({ ...prevState, isLoading: true }));
+    const flashCards = await generateFlashCards(searchText);
 
-    const flashCards: FlashCardData[] = [];
-    data.body.forEach((flashCard: FlashCardData) => {
-      flashCards.push(flashCard);
-    });
+    // Set loading to false
+    setRegenerateButtonState((prevState) => ({ ...prevState, isLoading: false }));
 
+    // Update flashcard
     onChangeFlashcards(flashCards);
     onChangePage(HomeRenderType.GENERATED_CARDS);
   };
@@ -32,11 +34,11 @@ export const TextInput = ({ onChangePage, onChangeFlashcards }: TextInputProps) 
   return (
     <div style={{ textAlign: "center", fontSize: "1.5em" }}>
       <h1>Questions</h1>
-      <TextArea onChange={setInputText} value={inputText} />
+      <TextArea onChange={onChangeSearchText} value={searchText} />
       <br />
-      <Button variant="contained" onClick={() => onClickButton()}>
+      <LoadingButton variant="contained" color={regenerateButtonState.color} loading={regenerateButtonState.isLoading} onClick={() => onClickButton()}>
         Generate Flashcards
-      </Button>
+      </LoadingButton>
     </div>
   );
 };
