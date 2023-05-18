@@ -28,12 +28,13 @@ interface RegenerateButtonState {
 
 export const GeneratedCards = ({ onChangePage, flashcards, searchText, onChangeFlashcards }: GeneratedCardsProps) => {
   const [generatedFlashCards, setGeneratedFlashCards] = useState<FlashCardData[]>(flashcards);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [regenerateModalOpen, setRegenerateModalOpen] = useState(false);
   const [regenerateButtonState, setRegenerateButtonState] = useState<RegenerateButtonState>({
     color: "secondary",
     isLoading: false,
     level: RegenerateLevel.DEFAULT,
   });
+  const [saveModalOpen, setSaveModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setGeneratedFlashCards(flashcards);
@@ -51,7 +52,11 @@ export const GeneratedCards = ({ onChangePage, flashcards, searchText, onChangeF
   };
 
   const onClickRegenerateButton = async () => {
-    setModalOpen(true);
+    setRegenerateModalOpen(true);
+  };
+
+  const onClickSaveButton = () => {
+    setSaveModalOpen(true);
   };
 
   const onClickRegenerateWithLevel = async (level: RegenerateLevel) => {
@@ -80,7 +85,7 @@ export const GeneratedCards = ({ onChangePage, flashcards, searchText, onChangeF
         </ol>
       </ScrollableBox>
       <br />
-      <Button variant="contained" color="success" onClick={() => onChangePage()}>
+      <Button variant="contained" color="success" onClick={() => onClickSaveButton()}>
         SAVE CARDS
       </Button>
       <br />
@@ -94,7 +99,8 @@ export const GeneratedCards = ({ onChangePage, flashcards, searchText, onChangeF
         REGENERATE
       </LoadingButton>
 
-      {modalOpen && <RegenerateModal onChangeLevel={onClickRegenerateWithLevel} onClose={() => setModalOpen(false)} />}
+      {regenerateModalOpen && <RegenerateModal onChangeLevel={onClickRegenerateWithLevel} onClose={() => setRegenerateModalOpen(false)} />}
+      {saveModalOpen && <SaveModal onClose={() => setSaveModalOpen(false)} />}
     </div>
   );
 };
@@ -140,6 +146,34 @@ const RegenerateModal = ({ onChangeLevel, onClose }: RegenerateModalProps) => {
           </>
         );
       })}
+      <Button onClick={() => onClose()} variant="outlined" color="warning">
+        Cancel
+      </Button>
+    </ModalWrapper>
+  );
+};
+
+interface SaveModalProps {
+  onClose: Function;
+}
+
+const SaveModal = ({ onClose }: SaveModalProps) => {
+  const [selectedDeck, setSelectedDeck] = useState();
+
+  const handleSelect = (event) => {
+    setSelectedDeck(event.target.value);
+  };
+
+  const handleOnSave = () => {};
+
+  return (
+    <ModalWrapper>
+      <select id="deckSelect" value={selectedDeck} onChange={handleSelect}></select>
+      <br />
+      <Button onClick={() => handleOnSave()} variant="outlined">
+        Save
+      </Button>
+      <span style={{ margin: "0 10px" }}></span>
       <Button onClick={() => onClose()} variant="outlined" color="warning">
         Cancel
       </Button>
