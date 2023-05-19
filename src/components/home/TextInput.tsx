@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { generateFlashCards } from "../data/FlashCardData.tsx";
-import { HomeRenderType } from "./HomePage.tsx";
+import { generateFlashCards } from "../data/FlashCardData";
+import { HomeRenderType } from "./HomePage";
 import { LoadingButton } from "@mui/lab";
 
 type TextInputProps = {
@@ -21,7 +21,7 @@ export const TextInput = ({ onChangePage, onChangeFlashcards, searchText, onChan
   const onClickButton = async () => {
     // Wait for flash cards to be generated
     setRegenerateButtonState((prevState) => ({ ...prevState, isLoading: true }));
-    const flashCards = await generateFlashCards(searchText);
+    const flashCards = await generateFlashCards(searchText, {});
 
     // Set loading to false
     setRegenerateButtonState((prevState) => ({ ...prevState, isLoading: false }));

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { ContextProvider } from "../data/ContextProvider.tsx";
+import { ContextProvider } from "../data/ContextProvider";
 import { FlashCardData } from "../data/FlashCardData";
-import { GeneratedCards } from "./GeneratedCards.tsx";
-import { TextInput } from "./TextInput.tsx";
+import { GeneratedCards } from "./GeneratedCards";
+import { TextInput } from "./TextInput";
 
 export enum HomeRenderType {
   TEXT_INPUT,
@@ -11,7 +11,7 @@ export enum HomeRenderType {
 
 export const HomePage = () => {
   const [currentRenderType, setCurrentRenderType] = useState<HomeRenderType>(HomeRenderType.TEXT_INPUT);
-  const [flashcards, setFlashcards] = useState<FlashCardData>();
+  const [flashcards, setFlashcards] = useState<FlashCardData[]>();
   const [searchText, setSearchText] = useState<string>("");
 
   switch (currentRenderType) {

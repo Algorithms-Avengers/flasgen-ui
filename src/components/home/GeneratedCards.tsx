@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FlashCardData, generateFlashCards } from "../data/FlashCardData.tsx";
+import { FlashCardData, generateFlashCards } from "../data/FlashCardData";
 import { Button } from "@mui/material";
-import { RowFlashCard } from "./RowFlashCard.tsx";
+import { RowFlashCard } from "./RowFlashCard";
 import { LoadingButton } from "@mui/lab";
-import { HomeRenderType } from "./HomePage.tsx";
-import { ModalWrapper } from "../helpers/PromptWrapper.tsx";
-import { DeckContext } from "../data/DataContext.tsx";
-import { FlashCardDeck } from "../data/FlashCardData.tsx";
+import { HomeRenderType } from "./HomePage";
+import { ModalWrapper } from "../helpers/PromptWrapper";
+import { DeckContext } from "../data/DataContext";
+import { FlashCardDeck } from "../data/FlashCardData";
 
 type GeneratedCardsProps = {
   onChangePage: Function;
@@ -15,7 +15,7 @@ type GeneratedCardsProps = {
   onChangeFlashcards: Function;
 };
 
-enum RegenerateLevel {
+export enum RegenerateLevel {
   EASIER = "EASIER",
   HARDER = "HARDER",
   CUSTOM = "CUSTOM",
@@ -141,7 +141,7 @@ const RegenerateModal = ({ onChangeLevel, onClose }: RegenerateModalProps) => {
       {Object.values(RegenerateLevel).map((level: RegenerateLevel, index: number) => {
         return (
           <>
-            <Button onClick={() => onClickLevelButton(level)} color={colors[index]} variant="outlined">
+            <Button key={level} onClick={() => onClickLevelButton(level)} color={colors[index]} variant="outlined">
               {level}
             </Button>
             <span style={{ margin: "0 10px" }}></span>

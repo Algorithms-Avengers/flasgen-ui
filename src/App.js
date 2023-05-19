@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { DeckHome } from "./components/decks/DeckHome.tsx";
-import { HomePage } from "./components/home/HomePage.tsx";
-import { LearnHome } from "./components/learn/LearnHome.tsx";
-import NavigationBar from "./components/navigation/NavigationBar.tsx";
+import { DeckHome } from "./components/decks/DeckHome";
+import { HomePage } from "./components/home/HomePage";
+import { LearnHome } from "./components/learn/LearnHome";
+import NavigationBar from "./components/navigation/NavigationBar";
 
 function App() {
   return (

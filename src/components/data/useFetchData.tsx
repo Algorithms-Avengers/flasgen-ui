@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchDecks, FlashCardDeck } from "./FlashCardData.tsx";
+import { fetchDecks, FlashCardDeck } from "./FlashCardData";
 
 export const useFetchData = () => {
   const [decks, setDecks] = useState<FlashCardDeck[]>([]);

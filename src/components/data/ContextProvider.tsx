@@ -1,6 +1,6 @@
 import React from "react";
-import { DeckContext } from "./DataContext.tsx";
-import { useFetchData } from "./useFetchData.tsx";
+import { DeckContext } from "./DataContext";
+import { useFetchData } from "./useFetchData";
 
 export const ContextProvider = ({ children }) => {
   const decks = useFetchData();
