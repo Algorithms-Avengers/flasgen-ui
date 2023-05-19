@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FlashCardData, generateFlashCards } from "../data/FlashCardData.tsx";
 import { Button } from "@mui/material";
 import { RowFlashCard } from "./RowFlashCard.tsx";
 import { LoadingButton } from "@mui/lab";
 import { HomeRenderType } from "./HomePage.tsx";
 import { ModalWrapper } from "../helpers/PromptWrapper.tsx";
+import { DeckContext } from "../data/DataContext.tsx";
+import { FlashCardDeck } from "../data/FlashCardData.tsx";
 
 type GeneratedCardsProps = {
   onChangePage: Function;
@@ -159,6 +161,7 @@ interface SaveModalProps {
 
 const SaveModal = ({ onClose }: SaveModalProps) => {
   const [selectedDeck, setSelectedDeck] = useState();
+  const decks: FlashCardDeck[] = useContext(DeckContext);
 
   const handleSelect = (event) => {
     setSelectedDeck(event.target.value);
@@ -168,7 +171,16 @@ const SaveModal = ({ onClose }: SaveModalProps) => {
 
   return (
     <ModalWrapper>
-      <select id="deckSelect" value={selectedDeck} onChange={handleSelect}></select>
+      <select id="deckSelect" value={selectedDeck} onChange={handleSelect}>
+        <option value="">-- Select --</option>
+        {decks.map((deck: FlashCardDeck) => {
+          return (
+            <option key={deck.id} value={deck.name}>
+              {deck.name}
+            </option>
+          );
+        })}
+      </select>
       <br />
       <Button onClick={() => handleOnSave()} variant="outlined">
         Save

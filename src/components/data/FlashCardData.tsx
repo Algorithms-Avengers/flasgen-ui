@@ -8,6 +8,7 @@ export interface FlashCardData {
 
 export interface FlashCardDeck {
   id: number;
+  name: string;
   flashCards: FlashCardData[];
 }
 
