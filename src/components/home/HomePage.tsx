@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ContextProvider } from "../data/ContextProvider.tsx";
 import { FlashCardData } from "../data/FlashCardData";
 import { GeneratedCards } from "./GeneratedCards.tsx";
 import { TextInput } from "./TextInput.tsx";
@@ -16,30 +17,36 @@ export const HomePage = () => {
   switch (currentRenderType) {
     case HomeRenderType.TEXT_INPUT:
       return (
-        <TextInput
-          onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)}
-          onChangeFlashcards={setFlashcards}
-          searchText={searchText}
-          onChangeSearchText={setSearchText}
-        />
+        <ContextProvider>
+          <TextInput
+            onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)}
+            onChangeFlashcards={setFlashcards}
+            searchText={searchText}
+            onChangeSearchText={setSearchText}
+          />
+        </ContextProvider>
       );
     case HomeRenderType.GENERATED_CARDS:
       return (
-        <GeneratedCards
-          onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)}
-          flashcards={flashcards}
-          searchText={searchText}
-          onChangeFlashcards={setFlashcards}
-        />
+        <ContextProvider>
+          <GeneratedCards
+            onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)}
+            flashcards={flashcards}
+            searchText={searchText}
+            onChangeFlashcards={setFlashcards}
+          />
+        </ContextProvider>
       );
     default:
       return (
-        <TextInput
-          onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)}
-          onChangeFlashcards={setFlashcards}
-          searchText={searchText}
-          onChangeSearchText={setSearchText}
-        />
+        <ContextProvider>
+          <TextInput
+            onChangePage={(pageType: HomeRenderType) => setCurrentRenderType(pageType)}
+            onChangeFlashcards={setFlashcards}
+            searchText={searchText}
+            onChangeSearchText={setSearchText}
+          />
+        </ContextProvider>
       );
   }
 };
