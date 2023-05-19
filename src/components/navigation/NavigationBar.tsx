@@ -2,9 +2,9 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
-import { RouteComponent, Route } from "./RouteComponent.tsx";
-import { Logo } from "./Logo.tsx";
-import { UserMenu } from "./UserMenu.tsx";
+import { RouteComponent, Route } from "./RouteComponent";
+import { Logo } from "./Logo";
+import { UserMenu } from "./UserMenu";
 
 const routes: Route[] = [
   { name: "Home", href: "/" },

@@ -1,7 +1,7 @@
 import { Button, TextareaAutosize } from "@mui/material";
 import React, { useState } from "react";
 import { FlashCardData } from "../data/FlashCardData";
-import { ModalWrapper } from "../helpers/PromptWrapper.tsx";
+import { ModalWrapper } from "../helpers/PromptWrapper";
 
 interface RowFlashCardProps {
   flashcard: FlashCardData;
