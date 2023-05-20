@@ -9,7 +9,7 @@ import { UserMenu } from "./UserMenu";
 const routes: Route[] = [
   { name: "Home", href: "/" },
   { name: "Decks", href: "/decks" },
-  { name: "Learn", href: "/learn" },
+  { name: "Learn", href: "/learn/home" },
 ];
 
 function NavigationBar() {
