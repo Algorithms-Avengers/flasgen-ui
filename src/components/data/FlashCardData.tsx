@@ -1,5 +1,4 @@
 import axios from "axios";
-import { RegenerateLevel } from "components/home/GeneratedCards";
 
 export interface FlashCardData {
   id?: number; // can be undefined as initially created
@@ -14,7 +13,8 @@ export interface FlashCardDeck {
 }
 
 const FLASHCARD_GENERATOR_API = "https://1fyijkhfxa.execute-api.us-west-2.amazonaws.com/default/flashcard_ml_management";
-const FETCH_DATA_API = "https://mxri27m4f2.execute-api.us-west-2.amazonaws.com/default/flashgen-backend";
+const FETCH_DATA_API = "https://mxri27m4f2.execute-api.us-west-2.amazonaws.com/default/flashgen-backend/getalldecks";
+const TODAY_LEARN_FLASHCARDS_API = "https://mxri27m4f2.execute-api.us-west-2.amazonaws.com/default/flashgen-backend/gettodaylearncards";
 
 export const generateFlashCards = async (inputText: string, additionalData?: any): Promise<FlashCardData[]> => {
   const { data } = await axios.post(FLASHCARD_GENERATOR_API, {
@@ -39,4 +39,15 @@ export const fetchDecks = async () => {
   });
 
   return decks;
+};
+
+export const fetchTodayLearnFlashcards = async () => {
+  const { data } = await axios.get(TODAY_LEARN_FLASHCARDS_API);
+
+  const todayLearnCards: FlashCardData[] = [];
+  data.forEach((flashcard: FlashCardData) => {
+    todayLearnCards.push(flashcard);
+  });
+
+  return todayLearnCards;
 };
