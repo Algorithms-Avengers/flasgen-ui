@@ -1,13 +1,14 @@
 import { Button } from "@mui/material";
 import { LearnContext, LearnContextType } from "components/data/DataContext";
 import { fetchTodayLearnFlashcards, FlashCardData } from "components/data/FlashCardData";
+import SpinningPage from "components/helpers/SpinningPage";
 import { RouteEnum } from "components/navigation/NavigationBar";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import "./CardStatistic.css";
 
 export const LearnHome = () => {
-  const [todayLearnCards, setTodayLearnCards] = useState<FlashCardData[]>([]);
+  const [todayLearnCards, setTodayLearnCards] = useState<FlashCardData[] | undefined>(undefined);
   const { setLearnDeck } = useContext(LearnContext);
   const navigate = useNavigate();
 
@@ -24,6 +25,10 @@ export const LearnHome = () => {
     setLearnDeck((prevState: LearnContextType) => ({ ...prevState, flashCards: todayLearnCards }));
     navigate(RouteEnum.LEARN_DECK);
   };
+
+  if (todayLearnCards === undefined) {
+    return <SpinningPage />;
+  }
 
   return (
     <div className="card-statistics-container">
