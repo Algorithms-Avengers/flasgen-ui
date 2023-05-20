@@ -4,6 +4,7 @@ import { LearnContext } from "components/data/DataContext";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router";
 import { RouteEnum } from "components/navigation/NavigationBar";
+import "./LearnFlashcard.css";
 
 export const LearnDeck = () => {
   const { learnDeck }: { learnDeck: FlashCardDeck } = useContext(LearnContext);
@@ -20,9 +21,9 @@ export const LearnDeck = () => {
     };
 
     return (
-      <div>
+      <div className="finished-cards-container">
         <h2>You've finished all cards</h2>
-        <Button onClick={() => onClickReturnDeckHome()} variant="outlined">
+        <Button onClick={onClickReturnDeckHome} variant="outlined">
           Return to Deck home
         </Button>
       </div>
@@ -38,8 +39,8 @@ interface FlashcardProps {
 }
 
 const Flashcard = ({ flashcard, setFlashcardIndex }: FlashcardProps) => {
-  const [displayContent, setDisplayContent] = useState<string>(flashcard.question);
-  const [isShowAnswer, setIsShowAnswer] = useState<boolean>(false);
+  const [displayContent, setDisplayContent] = useState(flashcard.question);
+  const [isShowAnswer, setIsShowAnswer] = useState(false);
 
   const onClickShowAnswer = () => {
     setDisplayContent(flashcard.answer);
@@ -51,21 +52,24 @@ const Flashcard = ({ flashcard, setFlashcardIndex }: FlashcardProps) => {
   };
 
   return (
-    <div>
-      <h3>{displayContent}</h3>
+    <div className="flashcard-container">
+      <div className="flashcard">
+        <h3 style={{ textAlign: "center" }}>{displayContent}</h3>
+      </div>
+
       {!isShowAnswer ? (
-        <Button variant="outlined" onClick={() => onClickShowAnswer()}>
+        <Button variant="outlined" onClick={onClickShowAnswer}>
           Show Answer
         </Button>
       ) : (
         <div className="button-container">
-          <Button variant="contained" color="success" onClick={() => onClickNextQuestion()}>
+          <Button variant="contained" color="success" onClick={onClickNextQuestion}>
             Easy to answer
           </Button>
-          <Button variant="contained" color="warning" onClick={() => onClickNextQuestion()}>
+          <Button variant="contained" color="warning" onClick={onClickNextQuestion}>
             A little hard
           </Button>
-          <Button variant="contained" color="error" onClick={() => onClickNextQuestion()}>
+          <Button variant="contained" color="error" onClick={onClickNextQuestion}>
             Can't remember
           </Button>
         </div>
@@ -73,3 +77,5 @@ const Flashcard = ({ flashcard, setFlashcardIndex }: FlashcardProps) => {
     </div>
   );
 };
+
+export default Flashcard;
