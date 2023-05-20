@@ -6,10 +6,17 @@ import { RouteComponent, Route } from "./RouteComponent";
 import { Logo } from "./Logo";
 import { UserMenu } from "./UserMenu";
 
+export enum RouteEnum {
+  HOME_PAGE = "/",
+  DECK_HOME = "/decks",
+  LEARN_HOME = "/learn/home",
+  LEARN_DECK = "/learn/deck",
+}
+
 const routes: Route[] = [
-  { name: "Home", href: "/" },
-  { name: "Decks", href: "/decks" },
-  { name: "Learn", href: "/learn" },
+  { name: "Home", href: RouteEnum.HOME_PAGE },
+  { name: "Decks", href: RouteEnum.DECK_HOME },
+  { name: "Learn", href: RouteEnum.LEARN_HOME },
 ];
 
 function NavigationBar() {

@@ -1,49 +1,36 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FlashCardDeck } from "components/data/FlashCardData";
 import { Button } from "@mui/material";
+import "./DeckDisplay.css";
+import { LearnContext } from "components/data/DataContext";
+import { useNavigate } from "react-router";
+import { RouteEnum } from "components/navigation/NavigationBar";
 
 export const DeckDisplay = ({ deck }: { deck: FlashCardDeck }) => {
   const isPublic = true;
   const lastUpdateDate = new Date().toLocaleDateString();
+  const { setLearnDeck } = useContext(LearnContext);
+  const navigate = useNavigate();
+
+  const onClickLearn = () => {
+    setLearnDeck(deck);
+    navigate(RouteEnum.LEARN_DECK);
+  };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        background: "#f0f0f0",
-        padding: "10px",
-        borderRadius: "5px",
-        width: "100%",
-        maxWidth: "700px",
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-          <h2 style={{ marginBottom: "5px" }}>{deck.name}</h2>
-          <span
-            style={{
-              display: "inline-block",
-              padding: "4px 8px",
-              borderRadius: "4px",
-              backgroundColor: isPublic ? "green" : "red",
-              color: "white",
-              fontWeight: "bold",
-            }}
-          >
-            {isPublic ? "Public" : "Private"}
-          </span>
-          <p style={{ marginTop: "5px" }}>Last Update: {lastUpdateDate}</p>
+    <div className="deck-display-container">
+      <div className="deck-info-container">
+        <div>
+          <h2 className="deck-name">{deck.name}</h2>
+          <span className={`public-tag ${isPublic ? "public" : "private"}`}>{isPublic ? "Public" : "Private"}</span>
+          <p className="last-update">Last Update: {lastUpdateDate}</p>
         </div>
       </div>
-      <div>
-        <Button style={{ marginRight: "5px" }} variant="outlined">
+      <div className="button-container">
+        <Button variant="outlined" onClick={() => onClickLearn()}>
           LEARN
         </Button>
-        <Button style={{ marginRight: "5px" }} variant="outlined">
-          SETTING
-        </Button>
+        <Button variant="outlined">SETTING</Button>
         <Button variant="outlined">EDIT</Button>
       </div>
     </div>

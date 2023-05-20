@@ -1,9 +1,16 @@
-import React from "react";
-import { DeckContext } from "./DataContext";
+import React, { useState } from "react";
+import { DeckContext, LearnContext } from "./DataContext";
+import { FlashCardDeck } from "./FlashCardData";
 import { useFetchData } from "./useFetchData";
 
 export const ContextProvider = ({ children }) => {
   const decks = useFetchData();
 
-  return <DeckContext.Provider value={decks}>{children}</DeckContext.Provider>;
+  const [learnDeck, setLearnDeck] = useState<FlashCardDeck | undefined>(undefined);
+
+  return (
+    <DeckContext.Provider value={decks}>
+      <LearnContext.Provider value={{ learnDeck, setLearnDeck }}>{children}</LearnContext.Provider>
+    </DeckContext.Provider>
+  );
 };
