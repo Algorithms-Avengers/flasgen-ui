@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FlashCardDeck } from "components/data/FlashCardData";
 import { Button } from "@mui/material";
 import "./DeckDisplay.css";
+import { LearnContext } from "components/data/DataContext";
+import { useNavigate } from "react-router";
+import { RouteEnum } from "components/navigation/NavigationBar";
 
 export const DeckDisplay = ({ deck }: { deck: FlashCardDeck }) => {
   const isPublic = true;
   const lastUpdateDate = new Date().toLocaleDateString();
+  const { setLearnDeck } = useContext(LearnContext);
+  const navigate = useNavigate();
+
+  const onClickLearn = () => {
+    setLearnDeck(deck);
+    navigate(RouteEnum.LEARN_DECK);
+  };
 
   return (
     <div className="deck-display-container">
@@ -17,7 +27,9 @@ export const DeckDisplay = ({ deck }: { deck: FlashCardDeck }) => {
         </div>
       </div>
       <div className="button-container">
-        <Button variant="outlined">LEARN</Button>
+        <Button variant="outlined" onClick={() => onClickLearn()}>
+          LEARN
+        </Button>
         <Button variant="outlined">SETTING</Button>
         <Button variant="outlined">EDIT</Button>
       </div>

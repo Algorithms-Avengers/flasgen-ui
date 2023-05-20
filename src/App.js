@@ -1,5 +1,5 @@
 import { ContextProvider } from "components/data/ContextProvider";
-import { LearnFlashcard } from "components/learn/LearnFlashcard";
+import { LearnDeck } from "components/learn/LearnFlashcard";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { DeckHome } from "./components/decks/DeckHome";
 import { HomePage } from "./components/home/HomePage";
@@ -15,7 +15,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/decks" element={<DeckHome />} />
           <Route path="/learn/home" element={<LearnHome />} />
-          <Route path="/learn/deck" element={<LearnFlashcard />} />
+          <Route path="/learn/deck" element={<LearnDeck />} />
         </Routes>
       </Router>
     </ContextProvider>
