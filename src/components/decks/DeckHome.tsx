@@ -8,7 +8,7 @@ export const DeckHome = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <h1>This is the deck homes</h1>
+      <h1>Deck homes</h1>
       {decks.map((deck: FlashCardDeck) => {
         return (
           <div style={{ marginBottom: "20px", width: "700px" }} key={deck.id}>

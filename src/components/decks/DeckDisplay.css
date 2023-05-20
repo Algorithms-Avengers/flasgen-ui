@@ -1,0 +1,49 @@
+.deck-display-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.deck-info-container {
+  display: flex;
+  align-items: center;
+}
+
+.deck-info-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.deck-name {
+  margin-bottom: 5px;
+}
+
+.public-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+}
+
+.public-tag.public {
+  background-color: green;
+}
+
+.public-tag.private {
+  background-color: red;
+}
+
+.last-update {
+  margin-top: 5px;
+}
+
+.button-container > button {
+  margin-right: 5px;
+}
